@@ -1,0 +1,281 @@
+/*
+ Copyright 2014 Zuercher Hochschule fuer Angewandte Wissenschaften
+ All Rights Reserved.
+
+    Licensed under the Apache License, Version 2.0 (the "License"); you may
+    not use this file except in compliance with the License. You may obtain
+    a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+    WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+    License for the specific language governing permissions and limitations
+    under the License.
+*/
+.ember-application {
+    /*margin: 20px;*/
+}
+
+.ember-view{
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+
+}
+
+body, html{
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: #56a5ec;
+}
+
+body {
+  color: #ffffff;
+  text-align: center;
+  overflow:auto;
+  position: relative;
+}
+
+.menu{
+  text-align: left;
+}
+
+
+/*------------*/
+.container{
+  float: left;
+  display: table-cell;
+  width: 90%;
+}
+.header{
+  margin: 5px;
+  padding: 5px;
+  border-bottom: 2px solid #3E76AA;
+  font-family: Arial, Helvetica, sans-serif;
+  height: auto;
+  text-align: left;
+  font-size: 22px;
+}
+#header {
+  font-size: 28px;
+  font-weight: normal;
+  text-align: left;
+  float: left;
+  padding-left: 1em;
+}
+
+.user{
+  float: right;
+  text-align: right;
+  padding-right: 1em;
+}
+
+#head a{
+  text-decoration: none;
+  color: #fff;
+  margin-right: 2em;
+  margin-top: 1em;
+}
+
+#head {
+  width: inherit;
+  padding: 1em 0em;
+  list-style-type: none;
+  /*width: auto;*/
+  position: relative;
+  display: block;
+  font-size: 12px;
+  font-weight: bold;
+  background: #3E76AA;
+  background: -o-linear-gradient(top, #519CDF, #366EAA);
+  background: -ms-linear-gradient(top, #519CDF, #366EAA);
+  background: -webkit-linear-gradient(top, #519CDF, #366EAA);
+  background: -moz-linear-gradient(top, #519CDF, #366EAA);
+  background: linear-gradient(to bottom, #519CDF, #366EAA);
+  font-family: Arial, Helvetica, sans-serif;
+  zoom: 1;
+  display: table;
+}
+
+/*------------*/
+
+#image{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 4em;
+  margin: 1em 0em;
+  text-align: center;
+  background: url("icclab.png") no-repeat center;
+}
+
+#footer {
+  font-family: Arial, Helvetica, sans-serif;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+	margin: 5px auto 0;
+	color: #ffffff;
+  font-size: 12px;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
+	text-align: center;
+}
+
+/*------------*/
+
+#menu{
+  display: table;
+  width: inherit;
+}
+
+#overview{
+  float: left;
+  display: table-cell;
+  width: 10%;
+}
+
+#overview ul{
+  margin: 0;
+  padding: 0;
+}
+
+#overview li {
+  font: 67.5% "Lucida Sans Unicode", "Bitstream Vera Sans", "Trebuchet Unicode MS", "Lucida Grande", Verdana, Helvetica, sans-serif;
+  /*border: 1px solid #3E76AA;
+  border-bottom: 1px solid #56a5ec;*/
+}
+#overview li.active{
+  /*border-left: 1px solid #498BC8;*/
+}
+#overview a {
+  background: #427DB4;
+  color: #333;
+  display: block;
+  margin: 0;
+  padding: 1em 0em;
+  text-decoration: none;
+  font-weight: normal;
+  font-size: 15px;
+  border: 1px solid #3E76AA;
+}
+
+#overview a:hover {
+  background: #498BC8;
+  color: #fff;
+}
+
+#overview a.active {
+  background: #498BC8;
+  color: #fff;
+  border-right: 1px solid #56a5ec;
+  border-left: 2px solid #356CA7;
+}
+
+/*------------*/
+#overview-info{
+  float: left;
+  font-family: Arial, Helvetica, sans-serif;
+/*  background: -o-linear-gradient(top, #8FB0CE, #487DAE);
+  background: -ms-linear-gradient(top, #8FB0CE, #487DAE);
+  background: -webkit-linear-gradient(top, #8FB0CE, #487DAE);
+  background: -moz-linear-gradient(top, #8FB0CE, #487DAE);
+  background: linear-gradient(to bottom, #8FB0CE, #487DAE);*/
+  border-radius: 3px;
+  width: 35%;
+}
+
+#overview-info p.label{
+  margin: 0 1em;
+  color: #fff;
+  padding: 0;
+  background: -o-linear-gradient(top, #8FB0CE, #487DAE);
+  background: -ms-linear-gradient(top, #8FB0CE, #487DAE);
+  background: -webkit-linear-gradient(top, #8FB0CE, #487DAE);
+  background: -moz-linear-gradient(top, #8FB0CE, #487DAE);
+  background: linear-gradient(to bottom, #8FB0CE, #487DAE);
+}
+
+#overview-info p{
+  margin: 0 1em;
+  background: #4889C4;
+  padding: 1em 0;
+}
+
+/*-------Chart--------*/
+.chart{
+  width: 60%;
+  height: auto;
+  float: left;
+  margin: 0em 1em;
+}
+
+/*----------Spinner----------*/
+
+.spinner{
+  position: absolute;
+  z-index: 2;
+  transform-origin: center;
+  background-color: #fff;
+  height: inherit;
+  width: inherit;
+  opacity: 0.4;
+}
+.spinner div{
+  position: relative;
+  top: 40%;
+	height:40px;
+	width:20px;
+  z-index: 1;
+	display:inline-block;
+	/*background-color: #4584BD;*/
+	border:1px solid #1A637A;
+  opacity: 0;
+
+	-webkit-animation:facebook_loader 1.3s linear infinite;
+	animation:facebook_loader 1.3s linear infinite;
+
+	-webkit-transform: scale(0.91);
+	transform: scale(0.91);
+}
+
+.spinner div:nth-child(1){
+	-webkit-animation-delay:0.39s;
+	animation-delay:0.39s;
+}
+.spinner div:nth-child(2){
+	-webkit-animation-delay:0.52s;
+	animation-delay:0.52s;
+}
+.spinner div:nth-child(3){
+	-webkit-animation-delay:0.65s;
+	animation-delay:0.65s;
+}
+
+@-webkit-keyframes facebook_loader{
+	0%{
+		-webkit-transform:scale(1.2);
+		opacity:1
+	}
+
+	100%{
+		-webkit-transform:scale(0.7);
+		opacity:0.1
+	}
+}
+
+@keyframes facebook_loader{
+	0%{
+		transform:scale(1.2);
+		opacity:1
+	}
+
+	100%{
+		transform:scale(0.7);
+		opacity:0.1
+	}
+}

@@ -1,0 +1,328 @@
+<!--Copyright 2014 Zuercher Hochschule fuer Angewandte Wissenschaften
+    All Rights Reserved.
+
+    Licensed under the Apache License, Version 2.0 (the "License"); you may
+    not use this file except in compliance with the License. You may obtain
+    a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+    WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+    License for the specific language governing permissions and limitations
+    under the License.-->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>AEM - Arcus Energy Monitoring</title>
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/login.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/style.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/loading.css">
+    <script src="http://builds.handlebarsjs.com.s3.amazonaws.com/handlebars-v1.3.0.js"></script>
+  </head>
+  <body>
+    {% verbatim %}
+    <script type="text/x-handlebars">
+       {{outlet}}
+    </script>
+    <script type ="text/x-handlebars"  id="index">
+      <div id="login">
+      <h1>Arcus</h1>
+
+      <label>Username:</label>
+      <input type="text" id="username" autocomplete="off"><br>
+      <label>Password:</label>
+      <input id="password" type="password">
+      <br><br>
+      <button class="button" type="submit" {{action 'login'}}>Login</button>
+      <br><br>
+
+      {{#if sessionTimeout}}
+        <div class="alert">Session Timeout.</div>
+      {{/if}}
+
+      {{#if loginFailed}}
+        <div class="alert">Invalid username or password</div>
+      {{/if}}
+
+      {{#if isProcessing}}
+      <div id="squaresWaveG">
+      <div id="squaresWaveG_1" class="squaresWaveG"></div>
+      <div id="squaresWaveG_2" class="squaresWaveG"></div>
+      <div id="squaresWaveG_3" class="squaresWaveG"></div>
+      <div id="squaresWaveG_4" class="squaresWaveG"></div>
+      <div id="squaresWaveG_5" class="squaresWaveG"></div>
+      <div id="squaresWaveG_6" class="squaresWaveG"></div>
+      <div id="squaresWaveG_7" class="squaresWaveG"></div>
+      <div id="squaresWaveG_8" class="squaresWaveG"></div>
+      </div>
+      {{/if}}
+
+      </div>
+    </script>
+    <script type="text/x-handlebars" id="app">
+      <div id = head>
+        <header id ="header">Arcus Openstack Energy Monitoring</header>
+        <a class="user" href="/">Logout</a>
+        <p class="user">Welcome, {{controllers.application.user}}</p>
+      </div>
+      <div id="menu">
+        <div id="overview">
+        <ul>
+          <li class="active">{{#link-to "app.index"}} Overview {{/link-to}}</li>
+          <li>{{#link-to "app.energyVm"}}Energy Consumption per VM{{/link-to}}</li>
+          <li>{{#link-to "app.energyProject"}}Energy Consumption per project{{/link-to}}</li>
+          <li>{{#link-to "app.variation"}}Energy Consumption variation with Time{{/link-to}}</li>
+        <ul>
+        </div>
+        {{outlet}}
+      </div>
+      <div id="image"></div>
+      <footer id="footer">
+        <p>Developed by ICCLab - ZHAW</p>
+      </footer>
+    </script>
+    <script type="text/x-handlebars" id="app/index">
+    <div class="container">
+    <header class="header">Overview</header>
+    <div id="overview-info">
+      {{#each data}}
+      <p class="label"> Month </p>
+      <p> {{month}} </p>
+      <p class="label"> Total Energy Consumption </p>
+      <p>{{total}}kJ</p>
+      <p class="label"> Mean Rate of Energy Consumption </p>
+      <p>{{mean_rate}}W</p>
+      <p class="label"> Mean # of active VMs </p>
+      <p>{{inst_active}}</p>
+      <p class="label"> Mean Rate of Energy Consumption per VM </p>
+      <p>{{mean_vm}}W</p>
+      {{/each}}
+    </div>
+      {{chart- chartOptions=chartOptions
+                  series=series}}
+    </div>
+   </script>
+   <script type="text/x-handlebars" id="app/energyVm">
+     <div class="container">
+     <header class="header">Energy Consumption per VM</header>
+     <div id="overview-info">
+       {{#each data}}
+       <p class="label"> Month </p>
+       <p> {{month}} </p>
+       <p class="label"> Total Energy Consumption </p>
+       <p>{{total}}kJ</p>
+       <p class="label"> Mean # of active VMs during period </p>
+       <p>{{inst_active}}</p>
+       <p class="label"> VM which consumed most energy during period </p>
+       <p>{{vm_name}}</p>
+       <p class="label"> Energy consumption of above VM </p>
+       <p>{{vm_rate}}kJ</p>
+       {{/each}}
+     </div>
+       {{chart- chartOptions=chartOptions
+                   series=series}}
+     </div>
+  </script>
+  <script type="text/x-handlebars" id="app/energyProject">
+    <div class="container">
+    <header class="header">Energy Consumption per Project</header>
+    <div id="overview-info">
+      {{#each data}}
+      <p class="label"> Month </p>
+      <p> {{month}} </p>
+      <p class="label"> Total Energy Consumption </p>
+      <p>{{total}}kJ</p>
+      <p class="label"> Mean # of projects VMs during period </p>
+      <p>{{projs_active}}</p>
+      <p class="label"> Project which consumed most energy during period </p>
+      <p>{{name}}</p>
+      <p class="label"> Energy consumption of above project </p>
+      <p>{{high_proj}}kJ</p>
+      {{/each}}
+    </div>
+        {{chart- chartOptions=chartOptions
+                    series=series}}
+    </div>
+  </script>
+  <script type="text/x-handlebars" id="app/variation">
+  <div class="container">
+  <header class="header">Energy Consumption Variation with Time</header>
+  <div id="overview-info">
+    {{#each data}}
+    <p class="label"> Start Month </p>
+    <select id="select_month">
+      <option value="01">January</option>
+      <option value="02">February</option>
+      <option value="03">March</option>
+      <option value="04">April</option>
+      <option value="05">May</option>
+      <option value="06">June</option>
+      <option value="07">July</option>
+      <option value="08">August</option>
+      <option value="09">September</option>
+      <option value="10">October</option>
+      <option value="11">November</option>
+      <option value="12">December</option>
+    </select>
+    <p class="label"> End Month </p>
+    <p>{{month}}</p>
+    <p class="label"> Total energy consumed during period </p>
+    <p>{{total}}kJ</p>
+    <p class="label"> Month with highest energy consumption </p>
+    <p>{{highest_month}}</p>
+    <p class="label"> Energy consumption during above month </p>
+    <p>{{highest_energy}}kJ</p>
+    {{/each}}
+  </div>
+    {{chart- chartOptions=chartOptions
+                series=series}}
+  </div>
+  </script>
+    <script type="text/x-handlebars" id="admin">
+    <div id = head>
+      <header id ="header">Arcus Openstack Energy Monitoring</header>
+      <a class="user" href="/"> Logout</a>
+      <p class="user">Welcome, {{controllers.application.user}}</p>
+    </div>
+    <div id="menu">
+      <div id="overview">
+      <ul>
+        <li class="active">{{#link-to "admin.index"}} Overview {{/link-to}}</li>
+        <li>{{#link-to "admin.hosts"}}Energy Consumption per Physical Host{{/link-to}}</li>
+        <li>{{#link-to "admin.project"}}Energy Consumption per Project{{/link-to}}</li>
+        <li>{{#link-to "admin.variation"}}Variation in Energy Consumption with Time{{/link-to}}</li>
+      <ul>
+      </div>
+      {{outlet}}
+    </div>
+    <div id="image">
+    </div>
+    <footer id="footer">
+      <p>Developed by ICCLab - ZHAW</p>
+    </footer>
+  </script>
+  <script type="text/x-handlebars" id="admin/index">
+  <div class="container">
+  <header class="header">Overview</header>
+  <div id="overview-info">
+    {{#each data}}
+    <p class="label"> Month </p>
+    <p> {{month}} </p>
+    <p class="label"> Total Energy Consumption </p>
+    <p>{{total}}kJ</p>
+    <p class="label"> Number of active Physical hosts </p>
+    <p>{{hosts}}</p>
+    <p class="label"> Mean Rate of Energy Consumption </p>
+    <p>{{mean_rate}}W</p>
+    <p class="label"> Rate of Energy Consumption of most demanding physical host </p>
+    <p>{{rate_energy}}W</p>
+    {{/each}}
+  </div>
+    {{chart- chartOptions=chartOptions
+                series=series}}
+  </div>
+  </script>
+  <script type="text/x-handlebars" id="admin/hosts">
+  <div class="container">
+  <header class="header">Energy Consumption per Physical Host</header>
+  <div id="overview-info">
+    {{#each data}}
+    <p class="label"> Month </p>
+    <p> {{month}} </p>
+    <p class="label"> Total Energy Consumption </p>
+    <p>{{total}}kJ</p>
+    <p class="label"> Number of active Physical hosts </p>
+    <p>{{number_hosts}}</p>
+    <p class="label"> Mean rate of Energy Consumption </p>
+    <p>{{mean_rate}}W</p>
+    <p class="label"> Rate of energy consumption of most demand </p>
+    <p>{{host_rate}}W</p>
+    {{/each}}
+  </div>
+    {{chart- chartOptions=chartOptions
+                series=series}}
+  </div>
+  </script>
+  <script type="text/x-handlebars" id="admin/project">
+  <div class="container">
+  <header class="header">Energy Consumption per Project</header>
+  <div id="overview-info">
+    {{#each data}}
+    <p class="label"> Month </p>
+    <p> {{month}} </p>
+    <p class="label"> Total Energy Consumption </p>
+    <p>{{total}}kJ</p>
+    <p class="label"> Number of projects active during period </p>
+    <p>{{number_proj}}</p>
+    <p class="label"> Mean rate of Energy Consumption per project </p>
+    <p>{{mean_rate}}W</p>
+    <p class="label"> Project which consumed most energy during period </p>
+    <p>{{highest_name}}</p>
+    <p class="label"> Energy consumption of above project </p>
+    <p>{{highest_prj}}kJ</p>
+    {{/each}}
+  </div>
+    {{chart- chartOptions=chartOptions
+                series=series}}
+  </div>
+  </script>
+  <script type="text/x-handlebars" id="admin/variation">
+  <div class="container">
+  <header class="header">Energy Consumption Variation with Time</header>
+  <div id="overview-info">
+    {{#each data}}
+    <p class="label"> Start Month </p>
+    <select id="select_month">
+      <option value="01">January</option>
+      <option value="02">February</option>
+      <option value="03">March</option>
+      <option value="04">April</option>
+      <option value="05">May</option>
+      <option value="06">June</option>
+      <option value="07">July</option>
+      <option value="08">August</option>
+      <option value="09">September</option>
+      <option value="10">October</option>
+      <option value="11">November</option>
+      <option value="12">December</option>
+    </select>
+    <p class="label"> End Month </p>
+    <p>{{month}}</p>
+    <p class="label"> Total energy consumed during period </p>
+    <p>{{total}}kJ</p>
+    <p class="label"> Month with highest energy consumption </p>
+    <p>{{highest_month}}</p>
+    <p class="label"> Energy consumption during above month </p>
+    <p>{{highest_energy}}kJ</p>
+    {{/each}}
+  </div>
+    {{chart- chartOptions=chartOptions
+                series=series}}
+  </div>
+  </script>
+  <script type="text/x-handlebars" data-template-name="session">
+      <div id="unauthorized">
+        403 - Forbidden
+        You do not have permissions to access this resource.
+        Please click <a href="/">here</a> to return to login page.
+      </div>
+  </script>
+    {% endverbatim %}
+  <script type="text/x-handlebars" data-template-name="components/chart-">
+    <div class="chart"></div>
+  </script>
+  <script src="{{ STATIC_URL }}js/libs/jquery-1.10.2.js"></script>
+  <script src="{{ STATIC_URL }}js/libs/ember-1.7.0.js"></script>
+  <script src="{{ STATIC_URL }}js/libs/ember-data.js"></script>
+  <script src="{{ STATIC_URL }}js/chart/highcharts.js"></script>
+  <script src="{{ STATIC_URL }}js/chart/modules/exporting.js"></script>
+  <script src="{{ STATIC_URL }}js/app.js"></script>
+  <script src="{{ STATIC_URL }}js/router.js"></script>
+  <script src="{{ STATIC_URL }}js/controller/controller.js"></script>
+  <script src="{{ STATIC_URL }}js/controller/admin-controller.js"></script>
+  <script src="{{ STATIC_URL }}tests/runner.js"></script>
+  </body>
+</html>

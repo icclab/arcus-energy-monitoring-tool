@@ -1,0 +1,85 @@
+/*
+ Copyright 2014 Zuercher Hochschule fuer Angewandte Wissenschaften
+ All Rights Reserved.
+
+    Licensed under the Apache License, Version 2.0 (the "License"); you may
+    not use this file except in compliance with the License. You may obtain
+    a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+    WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+    License for the specific language governing permissions and limitations
+    under the License.
+*/
+
+body, html{
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  color: #ffffff;
+  text-align: center;
+  background: #56a5ec;
+  overflow:auto;
+}
+
+#login{
+  padding: 10em;
+  border: 1px solid #56a5ec;
+  border-radius: 10px;
+  transform: translate(0, 40%);
+  list-style-type: none;
+  width: auto;
+  position: relative;
+  display: block;
+  font-size: 12px;
+  font-weight: bold;
+  background: #3E76AA;
+  background: -o-linear-gradient(top, #519CDF, #3E76AA);
+  background: -ms-linear-gradient(top, #519CDF, #3E76AA);
+  background: -webkit-linear-gradient(top, #519CDF, #3E76AA);
+  background: -moz-linear-gradient(top, #519CDF, #3E76AA);
+  background: linear-gradient(to bottom, #519CDF, #3E76AA);
+  border-bottom: 1px solid #56a5ec;
+  font-family: Arial, Helvetica, sans-serif;
+  zoom: 1;
+  display: table;
+  margin: auto;
+  width: 8em;
+}
+
+#login h1{
+  font-size: 40px;
+}
+
+.button {
+	-moz-box-shadow:inset 0px 0px 0px 0px #cae3fc;
+	-webkit-box-shadow:inset 0px 0px 0px 0px #cae3fc;
+	box-shadow:inset 0px 0px 0px 0px #cae3fc;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #56a5ec), color-stop(1, #3463D8) );
+	background:-moz-linear-gradient( center top, #56a5ec 5%, #3463D8 100% );
+	background-color:#4197ee;
+	border:1px solid #56a5ec;
+  color: #fff;
+	font-size:16px;
+  font-family: Arial, Helvetica, sans-serif;
+	font-weight:bold;
+	text-align:center;
+}
+.button:hover {
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #3463D8), color-stop(1, #56a5ec) );
+	background:-moz-linear-gradient( center top, #3463D8 5%, #56a5ec 100% );
+	background-color:#4197ee;
+
+}
+
+.button:active {
+	position:relative;
+	top:1px;
+}
