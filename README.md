@@ -4,13 +4,13 @@ Arcus-Openstack-Energy-Monitoring-Tool
 The Arcus energy monitoring tool is a tool to understand how energy is consumed
 in an Openstack cluster. At present, it extracts information
 from Ceilometer and displays it on a reasonably straightforward
-quite interactive Ember-JS based frontend.  
+quite interactive Ember-JS based frontend.
 
 #Requirements
 
-*Kwapi
-*Peewee
-*Mysql
+- Kwapi
+- Peewee
+- Mysql
 
 ##Mysql
 
